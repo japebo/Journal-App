@@ -9,7 +9,6 @@ export const NothingSelected = () => {
                 or create and entry
             </p>
             <i className='far fa-star fa-4x mt-5'/>
-            
         </div>
     )
 }

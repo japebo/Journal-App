@@ -11,7 +11,7 @@ export const startLoginEmailPassword = (email, password) => {
         dispatch(startLoading())
         signInWithEmailAndPassword(auth, email, password)
         .then(({user}) => {
-            // dispatch( login(user.uid, user.displayName));
+            // dispatch(login(user.uid, user.displayName)); this line is not necessary because there is an observable in AppRouter named onAuthStateChanged that when there is an auth change dispatch the login action to the authReducer
             dispatch(finishLoading())
         })
         .catch((e) => {
@@ -27,7 +27,7 @@ export const startRegisterWithEmailPsswdName = (email, password, name) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then( async (userCredential) => {
                 const {user} = userCredential;
-                console.log(user);
+                // console.log(user);
 
                 await updateProfile (auth.currentUser, {
                     displayName: name

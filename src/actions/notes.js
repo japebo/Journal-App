@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { db } from "../firebase/firebase-config";
-import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { types } from "../types/types";
 import { loadNotes } from "../helpers/loadNotes";
 import { fileUpload } from "../helpers/fileUpload";
@@ -82,13 +82,27 @@ export const startImageUpload = (file) => {
         Swal.close();
     }
 }
+
+export const startDeleting = (id) => {
+    return async (dispatch, getState) => {
+        const uid = getState().auth.uid;
+
+        await deleteDoc(doc(db,`${uid}/journal/notes/${ id }`));
+
+        dispatch(deleteNote(id));
+    }
+}
+
+export const deleteNote = (id) => ({
+    type: types.notesDelete,
+    payload: id
+})
+
+export const noteLogout = () => ({
+    type: types.notesLogoutCleaning
+})
+
 // export const uploadImage = () => {
 //     type: types.notesFileUrl,
 //     payload: { id, note }
 // }
-
-//Pasos:
-//subir foto a cloudinary
-//guardar el campo "secure_url" de la respuesta de la API
-//actualizar la activeNote con la nueva Url
-//actualizar las notes con la note modificada

@@ -3,6 +3,7 @@ import { googleAuthProvider } from "../firebase/firebase-config";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { finishLoading, startLoading } from "./ui";
 import Swal from 'sweetalert2'
+import { noteLogout } from "./notes";
 
 const auth = getAuth();
 
@@ -66,6 +67,7 @@ export const startLogout = () => {
     return async ( dispatch ) => {
         await signOut(auth);
         dispatch(logout());
+        dispatch(noteLogout());
     }
 }
 
